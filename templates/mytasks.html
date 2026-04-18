@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Tasks</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<h1>{{ name }}'s Tasks 📋</h1>
+
+<div class="form-container">
+
+    {% if tasks %}
+
+    <div class="table-wrapper">
+        <table>
+
+            <tr>
+                <th>Date</th>
+                <th>Work Type</th>
+                <th>Details</th>
+                <th>Status</th>
+                <th>TAT</th>
+                <th>QA</th>
+                <th>Others</th>
+                <th>Edit</th>
+            </tr>
+
+            {% for t in tasks %}
+            <tr>
+                <td>{{ t.date }}</td>
+                <td>{{ t.work_type }}</td>
+                <td>{{ t.details }}</td>
+
+                <td>
+                    {% if t.status == "not_started" %}
+                        🔵 Not Started
+                    {% elif t.status == "in_progress" %}
+                        🟡 In Progress
+                    {% else %}
+                        🟢 Completed
+                    {% endif %}
+                </td>
+
+                <td>{{ t.tat }}</td>
+                <td>{{ t.qa }}</td>
+                <td>{{ t.others }}</td>
+
+                <td>
+                    <a href="/edit/{{ t.id }}">
+                        <button>Edit</button>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+
+    {% else %}
+        <p style="text-align:center;">No tasks found 😕</p>
+    {% endif %}
+
+</div>
+
+</body>
+</html>

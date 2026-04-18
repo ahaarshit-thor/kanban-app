@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manager Dashboard</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0f172a;
+            color: white;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        /* FILTER */
+        .filter {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        input, select {
+            padding: 6px;
+            border-radius: 6px;
+            border: none;
+        }
+
+        /* DATE ACCORDION */
+        .accordion {
+            background: rgba(255,255,255,0.08);
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .panel {
+            display: none;
+            margin-top: 10px;
+        }
+
+        /* USER COLLAPSE */
+        .user-header {
+            cursor: pointer;
+            font-size: 13px;
+            margin: 8px 0;
+            color: cyan;
+        }
+
+        .user-panel {
+            display: none;
+        }
+
+        /* TABLE */
+        table {
+            width: 100%;
+            font-size: 12px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 6px;
+        }
+
+        tr:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* STATUS UI */
+        select.status {
+            background: rgba(0,0,0,0.6);
+            color: white;
+            border: 1px solid cyan;
+            border-radius: 5px;
+            padding: 4px;
+        }
+
+        button {
+            padding: 4px 6px;
+            border-radius: 5px;
+            border: none;
+            background: cyan;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<h1>Manager Dashboard 📊</h1>
+<div style="text-align:center; margin-bottom:10px;">
+    <a href="/analytics?name={{ request.args.get('name','') }}&date={{ request.args.get('date','') }}">
+        <button>📊 View Analytics</button>
+    </a>
+</div>
+
+<!-- FILTER -->
+<div class="filter">
+    <form method="get" action="/dashboard">
+        <input type="text" name="name" placeholder="Employee name">
+        <input type="date" name="date">
+        <button type="submit">Filter</button>
+    </form>
+</div>
+
+<!-- DATE GROUP -->
+{% for date, users in grouped_tasks.items() %}
+
+<div class="accordion">
+    📅 {{ date }} | 👥 {{ users|length }} users
+</div>
+
+<div class="panel">
+
+    {% for user, data in users.items() %}
+
+    <!-- USER -->
+    <div class="user-header" onclick="toggleUser(this)">
+        👤 {{ user }} ({{ data|length }} tasks)
+    </div>
+
+    <div class="user-panel">
+
+        <table>
+            <tr>
+                <th>Work</th>
+                <th>Details</th>
+                <th>Status</th>
+                <th>TAT</th>
+                <th>QA</th>
+                <th>Others</th>
+            </tr>
+
+            {% for t in data %}
+            <tr>
+                <td>{{ t.work_type }}</td>
+                <td>{{ t.details }}</td>
+
+                <td>
+                    <form method="post" action="/update_status/{{ t.id }}">
+                        <select name="status" class="status">
+                            <option value="not_started" {% if t.status == "not_started" %}selected{% endif %}>Not Started</option>
+                            <option value="in_progress" {% if t.status == "in_progress" %}selected{% endif %}>In Progress</option>
+                            <option value="completed" {% if t.status == "completed" %}selected{% endif %}>Completed</option>
+                        </select>
+                        <button type="submit">✔</button>
+                    </form>
+                </td>
+
+                <td>{{ t.tat }}</td>
+                <td>{{ t.qa }}</td>
+                <td>{{ t.others }}</td>
+            </tr>
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endfor %}
+
+<!-- JS -->
+<script>
+const accordions = document.querySelectorAll(".accordion");
+
+accordions.forEach(acc => {
+    acc.addEventListener("click", () => {
+        const panel = acc.nextElementSibling;
+        panel.style.display = panel.style.display === "block" ? "none" : "block";
+    });
+});
+
+function toggleUser(el) {
+    const panel = el.nextElementSibling;
+    panel.style.display = panel.style.display === "block" ? "none" : "block";
+}
+</script>
+
+</body>
+</html>

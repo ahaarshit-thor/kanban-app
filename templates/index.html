@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Daily Work Tracker</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<h1>Daily Work Tracker 📝</h1>
+
+<div class="form-container">
+
+<form action="/add" method="post">
+
+    <div style="display:flex; gap:20px; margin-bottom:20px;">
+        <div style="flex:1;">
+            <label>Employee Name:</label>
+            <input type="text" name="name" required>
+        </div>
+
+        <div style="flex:1;">
+            <label>Date:</label>
+            <input type="date" name="date" required>
+        </div>
+    </div>
+
+    <!-- TABLE WRAPPER -->
+    <div class="table-wrapper">
+
+        <table>
+            <tr>
+                <th>Work Type</th>
+                <th>Details</th>
+                <th>Status</th>
+                <th>TAT</th>
+                <th>QA Task</th>
+                <th>Others</th>
+            </tr>
+
+            {% set work_types = [
+                "RR","RMR Logical","RMR Editorial","IU","Transmittal",
+                "Covid Doc","LCD","GSR","CPT-ICD Link",
+                "Product/UAT","Ad-hoc Task"
+            ] %}
+
+            {% for wt in work_types %}
+            <tr>
+                <td>
+                    {{ wt }}
+                    <input type="hidden" name="work_type{{ loop.index }}" value="{{ wt }}">
+                </td>
+
+                <td><input type="text" name="details{{ loop.index }}"></td>
+
+                <td>
+                    <select name="status{{ loop.index }}">
+                        <option value="not_started">🔵 Not Started</option>
+                        <option value="in_progress">🟡 In Progress</option>
+                        <option value="completed">🟢 Completed</option>
+                    </select>
+                </td>
+
+                <td><input type="text" name="tat{{ loop.index }}"></td>
+
+                <td><input type="text" name="qa{{ loop.index }}"></td>
+
+                <td><input type="text" name="others{{ loop.index }}"></td>
+            </tr>
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+    <br>
+    <button type="submit">Submit Report 🚀</button>
+
+</form>
+
+<hr>
+
+<h3 style="text-align:center;">View / Edit Your Tasks</h3>
+
+<form action="/mytasks" method="get">
+
+    <div style="display:flex; gap:20px; max-width:500px; margin:auto;">
+        <input type="text" name="name" placeholder="Enter your name" required>
+        <input type="date" name="date" required>
+    </div>
+
+    <br>
+    <div style="text-align:center;">
+        <button type="submit">View My Tasks</button>
+    </div>
+
+</form>
+
+</div>
+
+</body>
+</html>

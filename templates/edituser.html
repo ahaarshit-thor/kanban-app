@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Task</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<h1>Edit Task ✏️</h1>
+
+<div class="form-container">
+
+<form method="post">
+
+    <label>Work Type:</label>
+    <input type="text" value="{{ task.work_type }}" disabled><br><br>
+
+    <label>Details:</label>
+    <input type="text" name="details" value="{{ task.details }}"><br><br>
+
+    <label>Status:</label>
+    <select name="status">
+        <option value="not_started" {% if task.status == "not_started" %}selected{% endif %}>Not Started</option>
+        <option value="in_progress" {% if task.status == "in_progress" %}selected{% endif %}>In Progress</option>
+        <option value="completed" {% if task.status == "completed" %}selected{% endif %}>Completed</option>
+    </select><br><br>
+
+    <label>TAT:</label>
+    <input type="text" name="tat" value="{{ task.tat }}"><br><br>
+
+    <label>QA:</label>
+    <input type="text" name="qa" value="{{ task.qa }}"><br><br>
+
+    <label>Others:</label>
+    <input type="text" name="others" value="{{ task.others }}"><br><br>
+
+    <button type="submit">Save Changes</button>
+
+</form>
+
+</div>
+
+</body>
+</html>

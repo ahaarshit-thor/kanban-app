@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Task</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<h1>Edit Task ✏️</h1>
+
+<div class="form-container">
+    <form method="post">
+
+        <label>Task:</label><br>
+        <input type="text" name="task" value="{{ task.task }}"><br><br>
+
+        <label>Status:</label><br>
+        <select name="status">
+            <option value="todo" {% if task.status == "todo" %}selected{% endif %}>Yet to Start</option>
+            <option value="doing" {% if task.status == "doing" %}selected{% endif %}>Working on it</option>
+            <option value="done" {% if task.status == "done" %}selected{% endif %}>Completed</option>
+        </select><br><br>
+
+        <button type="submit">Update Task</button>
+
+    </form>
+</div>
+
+</body>
+</html>

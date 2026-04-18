@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analytics</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .cards {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.08);
+            padding: 15px;
+            border-radius: 10px;
+            width: 200px;
+            text-align: center;
+        }
+
+        .big {
+            font-size: 20px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>📊 Smart Analytics</h1>
+
+<!-- TOP INSIGHTS -->
+<div class="cards">
+
+    <div class="card">
+        <h3>👤 Most Busy</h3>
+        <div class="big">{{ top_user[0] }}</div>
+        <small>{{ top_user[1] }} tasks</small>
+    </div>
+
+    <div class="card">
+        <h3>🔥 Busiest Day</h3>
+        <div class="big">{{ busiest_day }}</div>
+    </div>
+
+    <div class="card">
+        <h3>⚠️ In Progress</h3>
+        <div class="big">{{ in_progress }}</div>
+    </div>
+
+</div>
+
+<!-- DAILY SNAPSHOT -->
+<h2 style="text-align:center;">📅 Daily Snapshot</h2>
+
+<table>
+    <tr>
+        <th>Date</th>
+        <th>Total</th>
+        <th>Completed</th>
+        <th>In Progress</th>
+        <th>Not Started</th>
+    </tr>
+
+    {% for date, d in data.items() %}
+    <tr>
+        <td>{{ date }}</td>
+        <td>{{ d.total }}</td>
+        <td style="color:lightgreen;">{{ d.completed }}</td>
+        <td style="color:orange;">{{ d.in_progress }}</td>
+        <td style="color:skyblue;">{{ d.not_started }}</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+</body>
+</html>
