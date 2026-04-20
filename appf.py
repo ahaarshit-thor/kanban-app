@@ -751,7 +751,7 @@ app = Flask(__name__)
 
 # ---------- DB CONNECTION ----------
 def get_db():
-    DATABASE_URL = "postgresql://kanban_a94j_user:GhPg0XVmULrCA8ODKM9OHiT59f7pY4G8@dpg-d7i70hfavr4c73ffh2m0-a.virginia-postgres.render.com/kanban_a94j"   # 👈 apna URL paste kar
+    DATABASE_URL = os.getenv("DATABASE_URL") 
     return psycopg2.connect(DATABASE_URL)
 
 
