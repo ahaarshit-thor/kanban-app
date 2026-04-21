@@ -1,21 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Weekly Report</title>
+    <title>Weekly Manager Report</title>
+
     <style>
         body {
-            font-family: Arial;
+            font-family: Arial, sans-serif;
             padding: 20px;
+            background: #f9f9f9;
         }
 
         h1 {
             text-align: center;
+            margin-bottom: 25px;
         }
 
-        h2 {
-            background: #f2f2f2;
-            padding: 10px;
-            border-radius: 5px;
+        details {
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        summary {
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
         }
 
         .user {
@@ -28,22 +40,32 @@
             padding: 5px 0;
         }
 
-        .status {
-            font-size: 12px;
-            color: gray;
+        /* STATUS COLORS */
+        .completed {
+            color: green;
+            font-weight: bold;
+        }
+
+        .in_progress {
+            color: orange;
+            font-weight: bold;
+        }
+
+        .not_started {
+            color: red;
+            font-weight: bold;
         }
     </style>
 </head>
+
 <body>
 
 <h1>Manager Weekly Report</h1>
 
 {% for date, users in grouped.items() %}
 
-<details style="margin-bottom: 10px;">
-    <summary style="font-size: 18px; font-weight: bold; cursor: pointer;">
-        {{ date }}
-    </summary>
+<details>
+    <summary>{{ date }}</summary>
 
     {% for user, tasks in users.items() %}
         <div class="user">
@@ -51,7 +73,8 @@
 
             {% for t in tasks %}
                 <div class="task">
-                    • {{ t.details }} ({{ t.status }})
+                    • {{ t.details }} 
+                    (<span class="{{ t.status }}">{{ t.status }}</span>)
                 </div>
             {% endfor %}
         </div>
