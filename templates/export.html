@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weekly Report</title>
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        h2 {
+            background: #f2f2f2;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .user {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .task {
+            margin-left: 40px;
+            padding: 5px 0;
+        }
+
+        .status {
+            font-size: 12px;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Manager Weekly Report</h1>
+
+{% for date, users in grouped.items() %}
+    <h2>{{ date }}</h2>
+
+    {% for user, tasks in users.items() %}
+        <div class="user">
+            <strong>{{ user }}</strong>
+
+            {% for t in tasks %}
+                <div class="task">
+                    • {{ t.details }}
+                    <span class="status">({{ t.status }})</span>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+{% endfor %}
+
+</body>
+</html>

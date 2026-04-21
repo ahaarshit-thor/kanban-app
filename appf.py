@@ -993,7 +993,42 @@ def analytics():
         busiest_day=busiest_day,
         in_progress=total_in_progress
     )
+from datetime import datetime, timedelta
+from flask import Response
 
+@app.route("/export-html")
+def export_html():
+    conn = get_db()
+    cur = conn.cursor()
+
+    cur.execute("""
+        SELECT * FROM tasks
+        ORDER BY date DESC, name
+    """)
+
+    rows = cur.fetchall()
+    columns = [desc[0] for desc in cur.description]
+    tasks = [dict(zip(columns, row)) for row in rows]
+
+    cur.close()
+    conn.close()
+
+    grouped = {}
+    for t in tasks:
+        d = t["date"]
+        if d not in grouped:
+            grouped[d] = {}
+        if t["name"] not in grouped[d]:
+            grouped[d][t["name"]] = []
+        grouped[d][t["name"]].append(t)
+
+    html = render_template("export.html", grouped=grouped)
+
+    return Response(
+        html,
+        mimetype="text/html",
+        headers={"Content-Disposition": "attachment;filename=report.html"}
+    )
 # ---------- RUN ----------
 if __name__ == "__main__":
     app.run(debug=True)
