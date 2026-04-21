@@ -39,7 +39,11 @@
 <h1>Manager Weekly Report</h1>
 
 {% for date, users in grouped.items() %}
-    <h2>{{ date }}</h2>
+
+<details style="margin-bottom: 10px;">
+    <summary style="font-size: 18px; font-weight: bold; cursor: pointer;">
+        {{ date }}
+    </summary>
 
     {% for user, tasks in users.items() %}
         <div class="user">
@@ -47,12 +51,13 @@
 
             {% for t in tasks %}
                 <div class="task">
-                    • {{ t.details }}
-                    <span class="status">({{ t.status }})</span>
+                    • {{ t.details }} ({{ t.status }})
                 </div>
             {% endfor %}
         </div>
     {% endfor %}
+
+</details>
 
 {% endfor %}
 
