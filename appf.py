@@ -1001,10 +1001,7 @@ def export_html():
     conn = get_db()
     cur = conn.cursor()
 
-    cur.execute("""
-        SELECT * FROM tasks
-        ORDER BY date DESC, name
-    """)
+    cur.execute("SELECT * FROM tasks ORDER BY date DESC, name")
 
     rows = cur.fetchall()
     columns = [desc[0] for desc in cur.description]
@@ -1013,13 +1010,34 @@ def export_html():
     cur.close()
     conn.close()
 
+    # 🔥 LAST 7 DAYS FILTER
+    from datetime import datetime, timedelta
+
+    last_7_days = datetime.now() - timedelta(days=7)
+
+    filtered_tasks = []
+
+    for t in tasks:
+        try:
+            task_date = datetime.strptime(t["date"], "%Y-%m-%d")
+            if task_date >= last_7_days:
+                filtered_tasks.append(t)
+        except:
+            continue
+
+    tasks = filtered_tasks
+
+    # 🔥 GROUPING
     grouped = {}
     for t in tasks:
         d = t["date"]
+
         if d not in grouped:
             grouped[d] = {}
+
         if t["name"] not in grouped[d]:
             grouped[d][t["name"]] = []
+
         grouped[d][t["name"]].append(t)
 
     html = render_template("export.html", grouped=grouped)
@@ -1029,6 +1047,23 @@ def export_html():
         mimetype="text/html",
         headers={"Content-Disposition": "attachment;filename=report.html"}
     )
+@app.route("/clear-test-data")
+def clear_test_data():
+    secret = request.args.get("key")
+
+    if secret != "admin123":   # 👈 apna secret rakh
+        return "Unauthorized ❌"
+
+    conn = get_db()
+    cur = conn.cursor()
+
+    cur.execute("DELETE FROM tasks")
+
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    return "All test data cleared ✅"
 # ---------- RUN ----------
 if __name__ == "__main__":
     app.run(debug=True)
