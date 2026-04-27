@@ -745,13 +745,13 @@
 
 import psycopg2
 import os
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, Response
 
 app = Flask(__name__)
 
 # ---------- DB CONNECTION ----------
 def get_db():
-    DATABASE_URL = os.getenv("DATABASE_URL") 
+    DATABASE_URL = os.getenv("DATABASE_URL")
     return psycopg2.connect(DATABASE_URL)
 
 
@@ -818,78 +818,9 @@ def add_task():
     return redirect(url_for("home"))
 
 
-# ---------- VIEW USER TASKS ----------
-@app.route("/mytasks")
-def my_tasks():
-    name = request.args.get("name")
-    date = request.args.get("date")
-
-    conn = get_db()
-    cur = conn.cursor()
-
-    cur.execute("""
-        SELECT * FROM tasks
-        WHERE LOWER(name) = LOWER(%s) AND date = %s
-    """, (name, date))
-
-    rows = cur.fetchall()
-    columns = [desc[0] for desc in cur.description]
-
-    tasks = [dict(zip(columns, row)) for row in rows]
-
-    cur.close()
-    conn.close()
-
-    return render_template("mytasks.html", tasks=tasks, name=name)
-
-
-# ---------- EDIT TASK ----------
-@app.route("/edit/<int:task_id>", methods=["GET", "POST"])
-def edit_task(task_id):
-    conn = get_db()
-    cur = conn.cursor()
-
-    cur.execute("SELECT * FROM tasks WHERE id=%s", (task_id,))
-    row = cur.fetchone()
-
-    if not row:
-        return "Task not found"
-
-    columns = [desc[0] for desc in cur.description]
-    task = dict(zip(columns, row))
-
-    if request.method == "POST":
-        cur.execute("""
-            UPDATE tasks
-            SET details=%s, status=%s, tat=%s, qa=%s, others=%s
-            WHERE id=%s
-        """, (
-            request.form.get("details"),
-            request.form.get("status"),
-            request.form.get("tat"),
-            request.form.get("qa"),
-            request.form.get("others"),
-            task_id
-        ))
-
-        conn.commit()
-        cur.close()
-        conn.close()
-
-        return redirect(f"/mytasks?name={task['name']}&date={task['date']}")
-
-    cur.close()
-    conn.close()
-
-    return render_template("edituser.html", task=task)
-
-
 # ---------- DASHBOARD ----------
 @app.route("/dashboard")
 def dashboard():
-    name = request.args.get("name")
-    date = request.args.get("date")
-
     conn = get_db()
     cur = conn.cursor()
 
@@ -902,14 +833,6 @@ def dashboard():
     cur.close()
     conn.close()
 
-    # FILTER
-    if name:
-        tasks = [t for t in tasks if name.lower() in t["name"].lower()]
-
-    if date:
-        tasks = [t for t in tasks if t["date"] == date]
-
-    # GROUP
     grouped = {}
 
     for t in tasks:
@@ -958,14 +881,22 @@ def analytics():
     cur.close()
     conn.close()
 
-    # SUMMARY
     grouped = {}
 
     for t in tasks:
         d = t["date"]
 
         if d not in grouped:
-            grouped[d] = {"total": 0, "completed": 0, "in_progress": 0, "not_started": 0}
+            grouped[d] = {
+                "total": 0,
+                "completed": 0,
+                "in_progress": 0,
+                "not_started": 0,
+                "blocked": 0,
+                "on_hold": 0,
+                "po_assist": 0,
+                "sent_to_qa": 0
+            }
 
         grouped[d]["total"] += 1
 
@@ -973,6 +904,14 @@ def analytics():
             grouped[d]["completed"] += 1
         elif t["status"] == "in_progress":
             grouped[d]["in_progress"] += 1
+        elif t["status"] == "po_assist":
+            grouped[d]["po_assist"] += 1
+        elif t["status"] == "sent_to_qa":
+            grouped[d]["sent_to_qa"] += 1
+        elif t["status"] == "blocked":
+            grouped[d]["blocked"] += 1
+        elif t["status"] == "on_hold":
+            grouped[d]["on_hold"] += 1
         else:
             grouped[d]["not_started"] += 1
 
@@ -984,18 +923,19 @@ def analytics():
     date_load = {d: data["total"] for d, data in grouped.items()}
     busiest_day = max(date_load, key=date_load.get) if date_load else "N/A"
 
-    total_in_progress = sum([t["status"] == "in_progress" for t in tasks])
+    active_status = ["in_progress", "po_assist", "sent_to_qa"]
+    total_active = sum([t["status"] in active_status for t in tasks])
 
     return render_template(
         "analytics.html",
         data=grouped,
         top_user=top_user,
         busiest_day=busiest_day,
-        in_progress=total_in_progress
+        active_work=total_active
     )
-from datetime import datetime, timedelta
-from flask import Response
 
+
+# ---------- EXPORT HTML ----------
 @app.route("/export-html")
 def export_html():
     conn = get_db()
@@ -1010,7 +950,6 @@ def export_html():
     cur.close()
     conn.close()
 
-    # 🔥 LAST 7 DAYS FILTER
     from datetime import datetime, timedelta
 
     last_7_days = datetime.now() - timedelta(days=7)
@@ -1027,7 +966,6 @@ def export_html():
 
     tasks = filtered_tasks
 
-    # 🔥 GROUPING
     grouped = {}
     for t in tasks:
         d = t["date"]
@@ -1047,11 +985,12 @@ def export_html():
         mimetype="text/html",
         headers={"Content-Disposition": "attachment;filename=report.html"}
     )
+
+
+# ---------- CLEAR TEST DATA ----------
 @app.route("/clear-test-data")
 def clear_test_data():
-    secret = request.args.get("key")
-
-    if secret != "admin123":   # 👈 apna secret rakh
+    if request.args.get("key") != "admin123":
         return "Unauthorized ❌"
 
     conn = get_db()
@@ -1064,6 +1003,8 @@ def clear_test_data():
     conn.close()
 
     return "All test data cleared ✅"
+
+
 # ---------- RUN ----------
 if __name__ == "__main__":
     app.run(debug=True)
