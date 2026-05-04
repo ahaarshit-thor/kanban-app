@@ -43,7 +43,6 @@ input, select {
     font-size: 13px;
 }
 
-/* input text visibility fix */
 input {
     background: rgba(255,255,255,0.1);
     color: white;
@@ -56,20 +55,26 @@ table {
     font-size: 12px;
 }
 
-th, td {
-    padding: 6px;
-    text-align: left;
-}
-
 th {
     border-bottom: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08);
+}
+
+th, td {
+    padding: 8px;
+    text-align: center; /* FIXED ALIGNMENT */
+    vertical-align: middle;
+}
+
+tr {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
 tr:hover {
     background: rgba(255,255,255,0.05);
 }
 
-/* ---------- ACCORDION (DATE) ---------- */
+/* ---------- ACCORDION ---------- */
 .accordion {
     cursor: pointer;
     padding: 10px;
@@ -89,7 +94,7 @@ tr:hover {
     margin-top: 10px;
 }
 
-/* ---------- USER COLLAPSE ---------- */
+/* ---------- USER ---------- */
 .user-header {
     cursor: pointer;
     font-size: 13px;
@@ -101,18 +106,40 @@ tr:hover {
     display: none;
 }
 
-/* ---------- STATUS DROPDOWN ---------- */
-select.status {
-    background: rgba(0, 0, 0, 0.6);
-    color: white;
-    border: 1px solid rgba(0,255,255,0.4);
-    padding: 4px 6px;
+/* ---------- STATUS LABEL (NEW 🔥) ---------- */
+.status-label {
+    padding: 4px 8px;
     border-radius: 6px;
-    font-size: 12px;
-    transition: 0.3s;
+    font-size: 11px;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 4px;
 }
 
-select.status:hover {
+/* ---------- STATUS COLORS ---------- */
+.not_started { background: #1e3a8a; color: white; }
+.in_progress { background: #facc15; color: black; }
+.completed   { background: #22c55e; color: black; }
+.po_assist   { background: #a855f7; color: white; }
+.sent_to_qa  { background: #fb923c; color: black; }
+.blocked     { background: #ef4444; color: white; }
+.on_hold     { background: #64748b; color: white; }
+
+/* ---------- DROPDOWN ---------- */
+.status-dropdown {
+    width: 130px;
+    text-align: center;
+    padding: 5px;
+    border-radius: 6px;
+    border: 1px solid rgba(0,255,255,0.4);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    font-size: 12px;
+    transition: 0.3s;
+    margin-top: 4px;
+}
+
+.status-dropdown:hover {
     border-color: cyan;
     box-shadow: 0 0 6px cyan;
 }
