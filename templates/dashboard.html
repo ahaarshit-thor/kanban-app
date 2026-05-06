@@ -5,13 +5,16 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Manager Dashboard</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+          rel="stylesheet">
 
 </head>
 
@@ -35,7 +38,8 @@
     <!-- FILTER -->
     <div class="filter">
 
-        <form method="get" action="/dashboard">
+        <form method="get"
+              action="/dashboard">
 
             <input type="text"
                    name="name"
@@ -44,7 +48,9 @@
             <input type="date"
                    name="date">
 
-            <button type="submit">Filter</button>
+            <button type="submit">
+                Filter
+            </button>
 
         </form>
 
@@ -53,6 +59,7 @@
     <!-- DATE GROUP -->
     {% for date, users in grouped_tasks.items() %}
 
+    <!-- DATE ACCORDION -->
     <div class="accordion">
 
         📅 {{ date }}
@@ -61,6 +68,7 @@
 
     </div>
 
+    <!-- DATE PANEL -->
     <div class="panel">
 
         <!-- USER GRID -->
@@ -85,102 +93,103 @@
 
                 </div>
 
-                <!-- TASK PANEL -->
+                <!-- USER TASK PANEL -->
                 <div class="user-card-panel">
 
                     {% for t in data %}
 
-                    <!-- TASK CARD -->
-                    <div class="task-card">
+                    <!-- TASK ROW -->
+                    <div class="task-row">
 
-                        <!-- TOP -->
-                        <div class="task-top">
+                        <!-- LEFT -->
+                        <div class="task-left">
 
-                            <!-- WORK TYPE -->
                             <div class="work-badge">
-
                                 {{ t.work_type }}
+                            </div>
+
+                        </div>
+
+                        <!-- CENTER -->
+                        <div class="task-center">
+
+                            <div class="task-detail">
+                                {{ t.details }}
+                            </div>
+
+                            <div class="task-extra">
+
+                                {% if t.tat %}
+                                <small>
+                                    ⏱ {{ t.tat }}
+                                </small>
+                                {% endif %}
+
+                                {% if t.qa %}
+                                <small>
+                                    🧪 {{ t.qa }}
+                                </small>
+                                {% endif %}
 
                             </div>
 
-                            <!-- STATUS -->
+                        </div>
+
+                        <!-- RIGHT -->
+                        <div class="task-right">
+
                             <div class="status-label {{ t.status }}">
 
                                 {{ t.status.replace('_', ' ').title() }}
 
                             </div>
 
+                            <form method="post"
+                                  action="/update_status/{{ t.id }}">
+
+                                <select name="status"
+                                        class="compact-dropdown">
+
+                                    <option value="not_started"
+                                    {% if t.status == "not_started" %}
+                                    selected
+                                    {% endif %}>
+                                    Not Started
+                                    </option>
+
+                                    <option value="in_progress"
+                                    {% if t.status == "in_progress" %}
+                                    selected
+                                    {% endif %}>
+                                    In Progress
+                                    </option>
+
+                                    <option value="completed"
+                                    {% if t.status == "completed" %}
+                                    selected
+                                    {% endif %}>
+                                    Completed
+                                    </option>
+
+                                    <option value="po_assist"
+                                    {% if t.status == "po_assist" %}
+                                    selected
+                                    {% endif %}>
+                                    PO Assist
+                                    </option>
+
+                                    <option value="sent_to_qa"
+                                    {% if t.status == "sent_to_qa" %}
+                                    selected
+                                    {% endif %}>
+                                    Sent To QA
+                                    </option>
+
+                                </select>
+
+                            </form>
+
                         </div>
-
-                        <!-- DETAILS -->
-                        <div class="task-detail">
-
-                            {{ t.details }}
-
-                        </div>
-
-                        <!-- EXTRA -->
-                        <div class="task-extra">
-
-                            {% if t.tat %}
-                            <small>⏱ TAT: {{ t.tat }}</small>
-                            {% endif %}
-
-                            {% if t.qa %}
-                            <small>🧪 QA: {{ t.qa }}</small>
-                            {% endif %}
-
-                        </div>
-
-                        <!-- STATUS UPDATE -->
-                        <form method="post"
-                              action="/update_status/{{ t.id }}">
-
-                            <select name="status"
-                                    class="status-dropdown">
-
-                                <option value="not_started"
-                                {% if t.status == "not_started" %}
-                                selected
-                                {% endif %}>
-                                Not Started
-                                </option>
-
-                                <option value="in_progress"
-                                {% if t.status == "in_progress" %}
-                                selected
-                                {% endif %}>
-                                In Progress
-                                </option>
-
-                                <option value="completed"
-                                {% if t.status == "completed" %}
-                                selected
-                                {% endif %}>
-                                Completed
-                                </option>
-
-                                <option value="po_assist"
-                                {% if t.status == "po_assist" %}
-                                selected
-                                {% endif %}>
-                                PO Assist
-                                </option>
-
-                                <option value="sent_to_qa"
-                                {% if t.status == "sent_to_qa" %}
-                                selected
-                                {% endif %}>
-                                Sent To QA
-                                </option>
-
-                            </select>
-
-                            <button type="submit">
-                                ✔
-                            </button>
-
-                        </form>
 
                     </div>
 
@@ -221,7 +230,7 @@
 
         });
 
-        // USER TASK ACCORDION
+        // USER ACCORDION
         function toggleUser(el) {
 
             const panel =

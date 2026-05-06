@@ -12,16 +12,6 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* ---------- FORM CONTAINER ---------- */
-.form-container {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    padding: 12px;
-    margin: 12px 0;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,255,255,0.1);
-}
-
 /* ---------- FILTER ---------- */
 .filter {
     display: flex;
@@ -32,128 +22,33 @@ h1 {
 .filter form {
     display: flex;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
-/* ---------- INPUT ---------- */
-input, select {
-    padding: 6px 8px;
-    border-radius: 6px;
+input,
+select {
+    padding: 8px 10px;
+    border-radius: 8px;
     border: none;
     outline: none;
     font-size: 13px;
 }
 
 input {
-    background: rgba(255,255,255,0.1);
-    color: white;
-}
-
-/* ---------- TABLE ---------- */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 12px;
-}
-
-th {
-    border-bottom: 1px solid rgba(255,255,255,0.2);
     background: rgba(255,255,255,0.08);
-}
-
-th, td {
-    padding: 8px;
-    text-align: center; /* FIXED ALIGNMENT */
-    vertical-align: middle;
-}
-
-tr {
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-tr:hover {
-    background: rgba(255,255,255,0.05);
-}
-
-/* ---------- ACCORDION ---------- */
-.accordion {
-    cursor: pointer;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 8px;
-    background: rgba(255,255,255,0.08);
-    transition: 0.3s;
-}
-
-.accordion:hover {
-    background: rgba(0,255,255,0.2);
-}
-
-/* ---------- PANEL ---------- */
-.panel {
-    display: none;
-    margin-top: 10px;
-}
-
-/* ---------- USER ---------- */
-.user-header {
-    cursor: pointer;
-    font-size: 13px;
-    margin: 8px 0;
-    color: cyan;
-}
-
-.user-panel {
-    display: none;
-}
-
-/* ---------- STATUS LABEL (NEW 🔥) ---------- */
-.status-label {
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 11px;
-    font-weight: 600;
-    display: inline-block;
-    margin-bottom: 4px;
-}
-
-/* ---------- STATUS COLORS ---------- */
-.not_started { background: #1e3a8a; color: white; }
-.in_progress { background: #facc15; color: black; }
-.completed   { background: #22c55e; color: black; }
-.po_assist   { background: #a855f7; color: white; }
-.sent_to_qa  { background: #fb923c; color: black; }
-.blocked     { background: #ef4444; color: white; }
-.on_hold     { background: #64748b; color: white; }
-
-/* ---------- DROPDOWN ---------- */
-.status-dropdown {
-    width: 130px;
-    text-align: center;
-    padding: 5px;
-    border-radius: 6px;
-    border: 1px solid rgba(0,255,255,0.4);
-    background: rgba(0, 0, 0, 0.6);
     color: white;
-    font-size: 12px;
-    transition: 0.3s;
-    margin-top: 4px;
-}
-
-.status-dropdown:hover {
-    border-color: cyan;
-    box-shadow: 0 0 6px cyan;
 }
 
 /* ---------- BUTTON ---------- */
 button {
-    background: rgba(0,255,255,0.2);
+    background: rgba(0,255,255,0.15);
     border: none;
-    padding: 4px 8px;
-    border-radius: 6px;
+    padding: 8px 12px;
+    border-radius: 8px;
     cursor: pointer;
     color: white;
-    font-size: 12px;
     transition: 0.3s;
+    font-size: 13px;
 }
 
 button:hover {
@@ -161,64 +56,134 @@ button:hover {
     color: black;
 }
 
-/* ---------- SCROLLBAR ---------- */
-::-webkit-scrollbar {
-    width: 6px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: cyan;
-    border-radius: 10px;
-}
-/* ---------- ANALYTICS GRID ---------- */
-.analytics-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 15px;
-    margin-top: 15px;
-}
-
-/* ---------- ANALYTICS CARD ---------- */
-.analytics-card {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.08);
+/* ---------- ACCORDION ---------- */
+.accordion {
+    cursor: pointer;
+    padding: 14px;
+    margin-top: 14px;
     border-radius: 12px;
-    padding: 15px;
+    background: rgba(255,255,255,0.06);
     transition: 0.3s;
-    box-shadow: 0 0 10px rgba(0,255,255,0.08);
+    font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.08);
 }
 
-.analytics-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 0 14px rgba(0,255,255,0.18);
+.accordion:hover {
+    background: rgba(0,255,255,0.15);
 }
 
-/* ---------- CARD TITLE ---------- */
-.analytics-card h3 {
-    margin-top: 0;
-    margin-bottom: 10px;
-    color: cyan;
-    font-size: 18px;
+.panel {
+    display: none;
+    margin-top: 12px;
 }
 
-/* ---------- TOTAL BOX ---------- */
-.total-box {
+/* ---------- USER GRID ---------- */
+.user-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 18px;
+}
+
+/* ---------- USER CARD ---------- */
+.user-card {
+    background: rgba(255,255,255,0.05);
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.08);
+    overflow: hidden;
+    box-shadow: 0 0 12px rgba(0,255,255,0.06);
+}
+
+/* ---------- USER HEADER ---------- */
+.user-card-header {
     background: rgba(255,255,255,0.08);
-    padding: 8px;
-    border-radius: 8px;
-    margin-bottom: 12px;
+    padding: 12px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.user-card-header:hover {
+    background: rgba(0,255,255,0.15);
+}
+
+/* ---------- USER TASK PANEL ---------- */
+.user-card-panel {
+    display: none;
+    padding: 10px;
+}
+
+/* ---------- TASK ROW ---------- */
+.task-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: rgba(255,255,255,0.04);
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: 0.3s;
+}
+
+.task-row:hover {
+    background: rgba(255,255,255,0.07);
+}
+
+/* ---------- LEFT ---------- */
+.task-left {
+    min-width: 90px;
+}
+
+/* ---------- WORK BADGE ---------- */
+.work-badge {
+    background: rgba(0,255,255,0.12);
+    color: cyan;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 11px;
     font-weight: 600;
     text-align: center;
 }
 
-/* ---------- STATUS LABEL ---------- */
-.status-label {
-    padding: 6px 10px;
-    border-radius: 8px;
-    margin-bottom: 8px;
+/* ---------- CENTER ---------- */
+.task-center {
+    flex: 1;
+}
+
+/* ---------- DETAILS ---------- */
+.task-detail {
     font-size: 13px;
+    line-height: 1.4;
+    margin-bottom: 6px;
+    color: rgba(255,255,255,0.92);
+}
+
+/* ---------- EXTRA ---------- */
+.task-extra {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    color: rgba(255,255,255,0.65);
+    font-size: 11px;
+}
+
+/* ---------- RIGHT ---------- */
+.task-right {
+    min-width: 140px;
+    text-align: right;
+}
+
+/* ---------- STATUS ---------- */
+.status-label {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 11px;
     font-weight: 600;
-    display: block;
+    margin-bottom: 6px;
 }
 
 /* ---------- STATUS COLORS ---------- */
@@ -247,90 +212,62 @@ button:hover {
     color: black;
 }
 
-/* ---------- USER GRID ---------- */
-.user-grid {
+/* ---------- DROPDOWN ---------- */
+.compact-dropdown {
+    width: 130px;
+    padding: 6px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(0,0,0,0.45);
+    color: white;
+    font-size: 12px;
+}
+
+/* ---------- ANALYTICS GRID ---------- */
+.analytics-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 15px;
     margin-top: 15px;
 }
 
-/* ---------- USER CARD ---------- */
-.user-card {
-    background: rgba(255,255,255,0.05);
-    border-radius: 14px;
-    overflow: hidden;
+/* ---------- ANALYTICS CARD ---------- */
+.analytics-card {
+    background: rgba(255,255,255,0.06);
     border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 15px;
+    transition: 0.3s;
     box-shadow: 0 0 10px rgba(0,255,255,0.08);
 }
 
-/* ---------- USER HEADER ---------- */
-.user-card-header {
-    background: rgba(255,255,255,0.08);
-    padding: 12px;
-    display: flex;
-    justify-content: space-between;
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.3s;
+.analytics-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 14px rgba(0,255,255,0.18);
 }
 
-.user-card-header:hover {
-    background: rgba(0,255,255,0.15);
-}
-
-/* ---------- USER TASK PANEL ---------- */
-.user-card-panel {
-    display: none;
-    padding: 12px;
-}
-
-/* ---------- TASK CARD ---------- */
-.task-card {
-    background: rgba(255,255,255,0.04);
-    border-radius: 12px;
-    padding: 12px;
-    margin-bottom: 12px;
-    border: 1px solid rgba(255,255,255,0.05);
-}
-
-/* ---------- TASK TOP ---------- */
-.task-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.analytics-card h3 {
+    margin-top: 0;
     margin-bottom: 10px;
-}
-
-/* ---------- WORK BADGE ---------- */
-.work-badge {
-    background: rgba(0,255,255,0.15);
     color: cyan;
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-size: 12px;
+}
+
+/* ---------- TOTAL ---------- */
+.total-box {
+    background: rgba(255,255,255,0.08);
+    padding: 8px;
+    border-radius: 8px;
+    margin-bottom: 12px;
     font-weight: 600;
+    text-align: center;
 }
 
-/* ---------- TASK DETAIL ---------- */
-.task-detail {
-    font-size: 13px;
-    line-height: 1.5;
-    margin-bottom: 10px;
-    color: rgba(255,255,255,0.9);
+/* ---------- SCROLLBAR ---------- */
+::-webkit-scrollbar {
+    width: 6px;
 }
 
-/* ---------- EXTRA INFO ---------- */
-.task-extra {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 10px;
-    color: rgba(255,255,255,0.7);
-    font-size: 11px;
-}
-
-/* ---------- STATUS DROPDOWN ---------- */
-.status-dropdown {
-    width: 100%;
-    margin-top: 6px;
+::-webkit-scrollbar-thumb {
+    background: cyan;
+    border-radius: 10px;
 }
