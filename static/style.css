@@ -7,6 +7,7 @@ body {
     padding: 20px;
 }
 
+/* ---------- HEADINGS ---------- */
 h1 {
     text-align: center;
     margin-bottom: 24px;
@@ -34,8 +35,10 @@ input,
 select,
 textarea {
 
-    background: rgba(255,255,255,0.08);
-    color: white;
+    width: 100%;
+
+    background: rgba(255,255,255,0.08) !important;
+    color: white !important;
 
     border: none;
     outline: none;
@@ -47,6 +50,22 @@ textarea {
     font-size: 13px;
 
     box-sizing: border-box;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+/* ---------- SELECT OPTIONS ---------- */
+select option {
+    background: #0f172a;
+    color: white;
+}
+
+/* ---------- TEXTAREA ---------- */
+textarea {
+    min-height: 50px;
+    resize: vertical;
 }
 
 /* ---------- TOP FORM ---------- */
@@ -58,18 +77,22 @@ textarea {
     flex-wrap: wrap;
 }
 
+.top-form input {
+    max-width: 250px;
+}
+
 /* ---------- TASK GRID ---------- */
 .task-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 20px;
+    gap: 16px;
 }
 
 /* ---------- TASK ENTRY CARD ---------- */
 .task-entry-card {
     background: rgba(255,255,255,0.05);
     border-radius: 14px;
-    padding: 18px;
+    padding: 14px;
     border: 1px solid rgba(255,255,255,0.08);
     box-shadow: 0 0 12px rgba(0,255,255,0.06);
     transition: 0.3s;
@@ -80,35 +103,52 @@ textarea {
     box-shadow: 0 0 18px rgba(0,255,255,0.15);
 }
 
+/* ---------- CARD TITLE ---------- */
 .task-entry-card h3 {
     margin-top: 0;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
     color: cyan;
+    font-size: 17px;
 }
 
 /* ---------- FORM GROUP ---------- */
 .form-group {
-    margin-bottom: 14px;
+    margin-bottom: 12px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 6px;
+    margin-bottom: 5px;
     color: rgba(255,255,255,0.8);
-    font-size: 13px;
-}
-
-/* ---------- TEXTAREA ---------- */
-textarea {
-    width: 100%;
-    min-height: 80px;
-    resize: vertical;
+    font-size: 12px;
 }
 
 /* ---------- SUBMIT ---------- */
 .submit-wrapper {
     text-align: center;
     margin-top: 30px;
+}
+
+/* ---------- USER INFO ---------- */
+.user-info {
+    text-align: center;
+    margin-bottom: 24px;
+    font-size: 15px;
+    font-weight: 600;
+    color: cyan;
+}
+
+/* ---------- FILTER ---------- */
+.filter {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.filter form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 /* ---------- ACCORDION ---------- */
@@ -130,19 +170,6 @@ textarea {
 .panel {
     display: none;
     margin-top: 12px;
-}
-
-/* ---------- FILTER ---------- */
-.filter {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.filter form {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
 }
 
 /* ---------- USER GRID ---------- */
@@ -205,29 +232,29 @@ textarea {
     background: rgba(255,255,255,0.08);
 }
 
-/* ---------- LEFT ---------- */
+/* ---------- TASK LEFT ---------- */
 .task-left {
     min-width: 90px;
 }
 
-/* ---------- CENTER ---------- */
+/* ---------- TASK CENTER ---------- */
 .task-center {
     flex: 1;
 }
 
-/* ---------- DETAILS ---------- */
+/* ---------- TASK DETAIL ---------- */
 .task-detail {
     font-size: 13px;
     line-height: 1.4;
 }
 
-/* ---------- RIGHT ---------- */
+/* ---------- TASK RIGHT ---------- */
 .task-right {
     min-width: 140px;
     text-align: right;
 }
 
-/* ---------- EXPAND ---------- */
+/* ---------- TASK EXPAND ---------- */
 .task-expand {
     display: none;
     margin-top: 8px;
@@ -324,7 +351,7 @@ textarea {
     color: cyan;
 }
 
-/* ---------- TOTAL ---------- */
+/* ---------- TOTAL BOX ---------- */
 .total-box {
     background: rgba(255,255,255,0.08);
     padding: 8px;
@@ -366,61 +393,4 @@ textarea {
 ::-webkit-scrollbar-thumb {
     background: cyan;
     border-radius: 10px;
-}
-
-/* ---------- USER INFO ---------- */
-.user-info {
-    text-align: center;
-    margin-bottom: 24px;
-    font-size: 15px;
-    font-weight: 600;
-    color: cyan;
-}
-
-/* ---------- COMPACT TEXTAREA ---------- */
-.compact-textarea {
-    min-height: 50px !important;
-    max-height: 80px;
-}
-
-/* ---------- DARK SELECT ---------- */
-.dark-select {
-
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-
-    background: rgba(255,255,255,0.08) !important;
-    color: white !important;
-
-    border: none;
-    outline: none;
-
-    width: 100%;
-}
-
-/* ---------- SELECT OPTIONS ---------- */
-.dark-select option {
-    background: #0f172a;
-    color: white;
-}
-
-/* ---------- SMALLER TASK CARD ---------- */
-.task-entry-card {
-    padding: 14px !important;
-}
-
-/* ---------- SMALLER LABEL ---------- */
-.form-group label {
-    font-size: 12px;
-}
-
-/* ---------- SMALLER TEXTAREA ---------- */
-textarea {
-    min-height: 50px;
-}
-
-/* ---------- SMALLER GRID GAP ---------- */
-.task-grid {
-    gap: 16px;
 }
