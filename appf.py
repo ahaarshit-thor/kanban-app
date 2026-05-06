@@ -783,9 +783,30 @@ create_table()
 
 
 # ---------- HOME ----------
+# ---------- HOME ----------
 @app.route("/")
 def home():
-    return render_template("index.html")
+
+    task_types = [
+
+        "RR",
+        "RMR Logical",
+        "RMR Editorial",
+        "IU",
+        "Transmittal",
+        "Covid Doc",
+        "LCD",
+        "GSR",
+        "CPT-ICD Link",
+        "Product/UAT",
+        "Ad-hoc Task"
+
+    ]
+
+    return render_template(
+        "index.html",
+        task_types=task_types
+    )
 
 
 # ---------- ADD TASK ----------

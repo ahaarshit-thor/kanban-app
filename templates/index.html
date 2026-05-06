@@ -42,28 +42,34 @@
         <!-- TASK GRID -->
         <div class="task-grid">
 
-            <!-- RR -->
+            {% for task in task_types %}
+
             <div class="task-entry-card">
 
-                <h3>🟣 RR</h3>
+                <h3>{{ task }}</h3>
 
+                <!-- DETAILS -->
                 <div class="form-group">
 
                     <label>Details</label>
 
-                    <textarea name="details1"></textarea>
+                    <textarea
+                        name="details{{ loop.index }}">
+                    </textarea>
 
                 </div>
 
+                <!-- WORK TYPE -->
                 <input type="hidden"
-                       name="work_type1"
-                       value="RR">
+                       name="work_type{{ loop.index }}"
+                       value="{{ task }}">
 
+                <!-- STATUS -->
                 <div class="form-group">
 
                     <label>Status</label>
 
-                    <select name="status1">
+                    <select name="status{{ loop.index }}">
 
                         <option value="not_started">
                             Not Started
@@ -89,262 +95,39 @@
 
                 </div>
 
+                <!-- TAT -->
                 <div class="form-group">
 
                     <label>TAT</label>
 
                     <input type="text"
-                           name="tat1">
+                           name="tat{{ loop.index }}">
 
                 </div>
 
+                <!-- QA -->
                 <div class="form-group">
 
                     <label>QA</label>
 
                     <input type="text"
-                           name="qa1">
+                           name="qa{{ loop.index }}">
 
                 </div>
 
+                <!-- OTHERS -->
                 <div class="form-group">
 
                     <label>Others</label>
 
                     <input type="text"
-                           name="others1">
+                           name="others{{ loop.index }}">
 
                 </div>
 
             </div>
 
-            <!-- RMR LOGICAL -->
-            <div class="task-entry-card">
-
-                <h3>🔵 RMR Logical</h3>
-
-                <div class="form-group">
-
-                    <label>Details</label>
-
-                    <textarea name="details2"></textarea>
-
-                </div>
-
-                <input type="hidden"
-                       name="work_type2"
-                       value="RMR Logical">
-
-                <div class="form-group">
-
-                    <label>Status</label>
-
-                    <select name="status2">
-
-                        <option value="not_started">
-                            Not Started
-                        </option>
-
-                        <option value="in_progress">
-                            In Progress
-                        </option>
-
-                        <option value="completed">
-                            Completed
-                        </option>
-
-                        <option value="po_assist">
-                            PO Assist
-                        </option>
-
-                        <option value="sent_to_qa">
-                            Sent To QA
-                        </option>
-
-                    </select>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>TAT</label>
-
-                    <input type="text"
-                           name="tat2">
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>QA</label>
-
-                    <input type="text"
-                           name="qa2">
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>Others</label>
-
-                    <input type="text"
-                           name="others2">
-
-                </div>
-
-            </div>
-
-            <!-- RMR EDITORIAL -->
-            <div class="task-entry-card">
-
-                <h3>🟢 RMR Editorial</h3>
-
-                <div class="form-group">
-
-                    <label>Details</label>
-
-                    <textarea name="details3"></textarea>
-
-                </div>
-
-                <input type="hidden"
-                       name="work_type3"
-                       value="RMR Editorial">
-
-                <div class="form-group">
-
-                    <label>Status</label>
-
-                    <select name="status3">
-
-                        <option value="not_started">
-                            Not Started
-                        </option>
-
-                        <option value="in_progress">
-                            In Progress
-                        </option>
-
-                        <option value="completed">
-                            Completed
-                        </option>
-
-                        <option value="po_assist">
-                            PO Assist
-                        </option>
-
-                        <option value="sent_to_qa">
-                            Sent To QA
-                        </option>
-
-                    </select>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>TAT</label>
-
-                    <input type="text"
-                           name="tat3">
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>QA</label>
-
-                    <input type="text"
-                           name="qa3">
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>Others</label>
-
-                    <input type="text"
-                           name="others3">
-
-                </div>
-
-            </div>
-
-            <!-- IU -->
-            <div class="task-entry-card">
-
-                <h3>🟠 IU</h3>
-
-                <div class="form-group">
-
-                    <label>Details</label>
-
-                    <textarea name="details4"></textarea>
-
-                </div>
-
-                <input type="hidden"
-                       name="work_type4"
-                       value="IU">
-
-                <div class="form-group">
-
-                    <label>Status</label>
-
-                    <select name="status4">
-
-                        <option value="not_started">
-                            Not Started
-                        </option>
-
-                        <option value="in_progress">
-                            In Progress
-                        </option>
-
-                        <option value="completed">
-                            Completed
-                        </option>
-
-                        <option value="po_assist">
-                            PO Assist
-                        </option>
-
-                        <option value="sent_to_qa">
-                            Sent To QA
-                        </option>
-
-                    </select>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>TAT</label>
-
-                    <input type="text"
-                           name="tat4">
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>QA</label>
-
-                    <input type="text"
-                           name="qa4">
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>Others</label>
-
-                    <input type="text"
-                           name="others4">
-
-                </div>
-
-            </div>
+            {% endfor %}
 
         </div>
 
