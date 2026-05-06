@@ -271,3 +271,87 @@ button:hover {
     background: cyan;
     border-radius: 10px;
 }
+/* ---------- TASK ITEM ---------- */
+.task-item {
+    margin-bottom: 10px;
+}
+
+/* ---------- TASK ROW ---------- */
+.task-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: rgba(255,255,255,0.04);
+    padding: 10px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.task-row:hover {
+    background: rgba(255,255,255,0.08);
+}
+
+/* ---------- LEFT ---------- */
+.task-left {
+    min-width: 90px;
+}
+
+/* ---------- CENTER ---------- */
+.task-center {
+    flex: 1;
+}
+
+/* ---------- RIGHT ---------- */
+.task-right {
+    min-width: 130px;
+    text-align: right;
+}
+
+/* ---------- EXPAND ---------- */
+.task-expand {
+    display: none;
+    margin-top: 8px;
+    background: rgba(255,255,255,0.03);
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* ---------- EXPAND SECTION ---------- */
+.expand-section {
+    margin-bottom: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* ---------- COMPACT DROPDOWN ---------- */
+.compact-dropdown {
+    width: 140px;
+    padding: 6px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(0,0,0,0.45);
+    color: white;
+    margin-top: 8px;
+}
+
+/* ---------- MOBILE ---------- */
+@media(max-width: 768px) {
+
+    .task-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .task-right {
+        width: 100%;
+        text-align: left;
+    }
+
+    .compact-dropdown {
+        width: 100%;
+    }
+
+}

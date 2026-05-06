@@ -56,10 +56,9 @@
 
     </div>
 
-    <!-- DATE GROUP -->
+    <!-- DATE LOOP -->
     {% for date, users in grouped_tasks.items() %}
 
-    <!-- DATE ACCORDION -->
     <div class="accordion">
 
         📅 {{ date }}
@@ -68,7 +67,6 @@
 
     </div>
 
-    <!-- DATE PANEL -->
     <div class="panel">
 
         <!-- USER GRID -->
@@ -98,52 +96,84 @@
 
                     {% for t in data %}
 
-                    <!-- TASK ROW -->
-                    <div class="task-row">
+                    <!-- TASK ITEM -->
+                    <div class="task-item">
 
-                        <!-- LEFT -->
-                        <div class="task-left">
+                        <!-- SUMMARY ROW -->
+                        <div class="task-row"
+                             onclick="toggleTask(this)">
 
-                            <div class="work-badge">
-                                {{ t.work_type }}
+                            <!-- LEFT -->
+                            <div class="task-left">
+
+                                <div class="work-badge">
+                                    {{ t.work_type }}
+                                </div>
+
+                            </div>
+
+                            <!-- CENTER -->
+                            <div class="task-center">
+
+                                <div class="task-detail">
+
+                                    {{ t.details[:40] }}...
+
+                                </div>
+
+                            </div>
+
+                            <!-- RIGHT -->
+                            <div class="task-right">
+
+                                <div class="status-label {{ t.status }}">
+
+                                    {{ t.status.replace('_', ' ').title() }}
+
+                                </div>
+
                             </div>
 
                         </div>
 
-                        <!-- CENTER -->
-                        <div class="task-center">
+                        <!-- EXPANDED DETAILS -->
+                        <div class="task-expand">
 
-                            <div class="task-detail">
+                            <div class="expand-section">
+
+                                <strong>📄 Full Detail:</strong><br>
                                 {{ t.details }}
-                            </div>
-
-                            <div class="task-extra">
-
-                                {% if t.tat %}
-                                <small>
-                                    ⏱ {{ t.tat }}
-                                </small>
-                                {% endif %}
-
-                                {% if t.qa %}
-                                <small>
-                                    🧪 {{ t.qa }}
-                                </small>
-                                {% endif %}
 
                             </div>
 
-                        </div>
+                            {% if t.tat %}
+                            <div class="expand-section">
 
-                        <!-- RIGHT -->
-                        <div class="task-right">
-
-                            <div class="status-label {{ t.status }}">
-
-                                {{ t.status.replace('_', ' ').title() }}
+                                <strong>⏱ TAT:</strong>
+                                {{ t.tat }}
 
                             </div>
+                            {% endif %}
 
+                            {% if t.qa %}
+                            <div class="expand-section">
+
+                                <strong>🧪 QA:</strong>
+                                {{ t.qa }}
+
+                            </div>
+                            {% endif %}
+
+                            {% if t.others %}
+                            <div class="expand-section">
+
+                                <strong>📝 Others:</strong>
+                                {{ t.others }}
+
+                            </div>
+                            {% endif %}
+
+                            <!-- STATUS UPDATE -->
                             <form method="post"
                                   action="/update_status/{{ t.id }}">
 
@@ -186,6 +216,10 @@
                                     </option>
 
                                 </select>
+
+                                <button type="submit">
+                                    ✔ Update
+                                </button>
 
                             </form>
 
@@ -238,6 +272,19 @@
 
             panel.style.display =
                 panel.style.display === "block"
+                ? "none"
+                : "block";
+
+        }
+
+        // TASK EXPAND
+        function toggleTask(el) {
+
+            const expand =
+                el.nextElementSibling;
+
+            expand.style.display =
+                expand.style.display === "block"
                 ? "none"
                 : "block";
 
