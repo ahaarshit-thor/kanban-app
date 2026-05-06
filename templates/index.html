@@ -1,106 +1,364 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Daily Work Tracker</title>
+<html lang="en">
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>DSU Task Tracker</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+          rel="stylesheet">
+
 </head>
+
 <body>
 
-<h1>Daily Work Tracker 📝</h1>
+    <h1>📝 DSU Task Tracker</h1>
 
-<div class="form-container">
+    <form method="POST"
+          action="/add">
 
-<form action="/add" method="post">
+        <!-- TOP FORM -->
+        <div class="top-form">
 
-    <div style="display:flex; gap:20px; margin-bottom:20px;">
-        <div style="flex:1;">
-            <label>Employee Name:</label>
-            <input type="text" name="name" required>
+            <input type="text"
+                   name="name"
+                   placeholder="Employee Name"
+                   required>
+
+            <input type="date"
+                   name="date"
+                   required>
+
         </div>
 
-        <div style="flex:1;">
-            <label>Date:</label>
-            <input type="date" name="date" required>
-        </div>
-    </div>
+        <!-- TASK GRID -->
+        <div class="task-grid">
 
-    <!-- TABLE WRAPPER -->
-    <div class="table-wrapper">
+            <!-- RR -->
+            <div class="task-entry-card">
 
-        <table>
-            <tr>
-                <th>Work Type</th>
-                <th>Details</th>
-                <th>Status</th>
-                <th>TAT</th>
-                <th>QA Task</th>
-                <th>Others</th>
-            </tr>
+                <h3>🟣 RR</h3>
 
-            {% set work_types = [
-                "RR","RMR Logical","RMR Editorial","IU","Transmittal",
-                "Covid Doc","LCD","GSR","CPT-ICD Link",
-                "Product/UAT","Ad-hoc Task"
-            ] %}
+                <div class="form-group">
 
-            {% for wt in work_types %}
-            <tr>
-                <td>
-                    {{ wt }}
-                    <input type="hidden" name="work_type{{ loop.index }}" value="{{ wt }}">
-                </td>
+                    <label>Details</label>
 
-                <td><input type="text" name="details{{ loop.index }}"></td>
+                    <textarea name="details1"></textarea>
 
-                <td>
-                    <select name="status{{ loop.index }}">
-                        <option value="not_started">🔵 Not Started</option>
-                        <option value="in_progress">🟡 In Progress</option>
-                        <option value="completed">🟢 Completed</option>
-                        <!-- NEW OPTIONS 👇 -->
-                        <option value="po_assist">🟣 PO Assist</option>
-                        <option value="sent_to_qa">🟠 Sent to QA</option>
+                </div>
+
+                <input type="hidden"
+                       name="work_type1"
+                       value="RR">
+
+                <div class="form-group">
+
+                    <label>Status</label>
+
+                    <select name="status1">
+
+                        <option value="not_started">
+                            Not Started
+                        </option>
+
+                        <option value="in_progress">
+                            In Progress
+                        </option>
+
+                        <option value="completed">
+                            Completed
+                        </option>
+
+                        <option value="po_assist">
+                            PO Assist
+                        </option>
+
+                        <option value="sent_to_qa">
+                            Sent To QA
+                        </option>
+
                     </select>
-                </td>
 
-                <td><input type="text" name="tat{{ loop.index }}"></td>
+                </div>
 
-                <td><input type="text" name="qa{{ loop.index }}"></td>
+                <div class="form-group">
 
-                <td><input type="text" name="others{{ loop.index }}"></td>
-            </tr>
-            {% endfor %}
+                    <label>TAT</label>
 
-        </table>
+                    <input type="text"
+                           name="tat1">
 
-    </div>
+                </div>
 
-    <br>
-    <button type="submit">Submit Report 🚀</button>
+                <div class="form-group">
 
-</form>
+                    <label>QA</label>
 
-<hr>
+                    <input type="text"
+                           name="qa1">
 
-<h3 style="text-align:center;">View / Edit Your Tasks</h3>
+                </div>
 
-<form action="/mytasks" method="get">
+                <div class="form-group">
 
-    <div style="display:flex; gap:20px; max-width:500px; margin:auto;">
-        <input type="text" name="name" placeholder="Enter your name" required>
-        <input type="date" name="date" required>
-    </div>
+                    <label>Others</label>
 
-    <br>
-    <div style="text-align:center;">
-        <button type="submit">View My Tasks</button>
-    </div>
+                    <input type="text"
+                           name="others1">
 
-</form>
+                </div>
 
-</div>
+            </div>
+
+            <!-- RMR LOGICAL -->
+            <div class="task-entry-card">
+
+                <h3>🔵 RMR Logical</h3>
+
+                <div class="form-group">
+
+                    <label>Details</label>
+
+                    <textarea name="details2"></textarea>
+
+                </div>
+
+                <input type="hidden"
+                       name="work_type2"
+                       value="RMR Logical">
+
+                <div class="form-group">
+
+                    <label>Status</label>
+
+                    <select name="status2">
+
+                        <option value="not_started">
+                            Not Started
+                        </option>
+
+                        <option value="in_progress">
+                            In Progress
+                        </option>
+
+                        <option value="completed">
+                            Completed
+                        </option>
+
+                        <option value="po_assist">
+                            PO Assist
+                        </option>
+
+                        <option value="sent_to_qa">
+                            Sent To QA
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>TAT</label>
+
+                    <input type="text"
+                           name="tat2">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>QA</label>
+
+                    <input type="text"
+                           name="qa2">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Others</label>
+
+                    <input type="text"
+                           name="others2">
+
+                </div>
+
+            </div>
+
+            <!-- RMR EDITORIAL -->
+            <div class="task-entry-card">
+
+                <h3>🟢 RMR Editorial</h3>
+
+                <div class="form-group">
+
+                    <label>Details</label>
+
+                    <textarea name="details3"></textarea>
+
+                </div>
+
+                <input type="hidden"
+                       name="work_type3"
+                       value="RMR Editorial">
+
+                <div class="form-group">
+
+                    <label>Status</label>
+
+                    <select name="status3">
+
+                        <option value="not_started">
+                            Not Started
+                        </option>
+
+                        <option value="in_progress">
+                            In Progress
+                        </option>
+
+                        <option value="completed">
+                            Completed
+                        </option>
+
+                        <option value="po_assist">
+                            PO Assist
+                        </option>
+
+                        <option value="sent_to_qa">
+                            Sent To QA
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>TAT</label>
+
+                    <input type="text"
+                           name="tat3">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>QA</label>
+
+                    <input type="text"
+                           name="qa3">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Others</label>
+
+                    <input type="text"
+                           name="others3">
+
+                </div>
+
+            </div>
+
+            <!-- IU -->
+            <div class="task-entry-card">
+
+                <h3>🟠 IU</h3>
+
+                <div class="form-group">
+
+                    <label>Details</label>
+
+                    <textarea name="details4"></textarea>
+
+                </div>
+
+                <input type="hidden"
+                       name="work_type4"
+                       value="IU">
+
+                <div class="form-group">
+
+                    <label>Status</label>
+
+                    <select name="status4">
+
+                        <option value="not_started">
+                            Not Started
+                        </option>
+
+                        <option value="in_progress">
+                            In Progress
+                        </option>
+
+                        <option value="completed">
+                            Completed
+                        </option>
+
+                        <option value="po_assist">
+                            PO Assist
+                        </option>
+
+                        <option value="sent_to_qa">
+                            Sent To QA
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>TAT</label>
+
+                    <input type="text"
+                           name="tat4">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>QA</label>
+
+                    <input type="text"
+                           name="qa4">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Others</label>
+
+                    <input type="text"
+                           name="others4">
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- SUBMIT -->
+        <div class="submit-wrapper">
+
+            <button type="submit">
+                🚀 Submit Tasks
+            </button>
+
+        </div>
+
+    </form>
 
 </body>
+
 </html>

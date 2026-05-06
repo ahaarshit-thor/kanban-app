@@ -117,7 +117,7 @@
 
                                 <div class="task-detail">
 
-                                    {{ t.details[:40] }}...
+                                    {{ t.details[:40] if t.details else "No details" }}
 
                                 </div>
 
