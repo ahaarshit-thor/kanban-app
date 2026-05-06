@@ -53,9 +53,7 @@
 
                     <label>Details</label>
 
-                    <textarea
-                        name="details{{ loop.index }}">
-                    </textarea>
+                    <textarea name="details{{ loop.index }}"></textarea>
 
                 </div>
 
@@ -69,7 +67,9 @@
 
                     <label>Status</label>
 
-                    <select name="status{{ loop.index }}">
+                    <select name="status{{ loop.index }}"
+                            class="status-dropdown status-not_started"
+                            onchange="updateStatusColor(this)">
 
                         <option value="not_started">
                             Not Started
@@ -141,7 +141,25 @@
         </div>
 
     </form>
+<script>
 
+function updateStatusColor(el) {
+
+    el.classList.remove(
+        "status-not_started",
+        "status-in_progress",
+        "status-completed",
+        "status-po_assist",
+        "status-sent_to_qa"
+    );
+
+    el.classList.add(
+        "status-" + el.value
+    );
+
+}
+
+</script>
 </body>
 
 </html>

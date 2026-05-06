@@ -394,3 +394,29 @@ textarea {
     background: cyan;
     border-radius: 10px;
 }
+/* ---------- STATUS DROPDOWN COLORS ---------- */
+
+.status-not_started {
+    background: #1e3a8a !important;
+    color: white !important;
+}
+
+.status-in_progress {
+    background: #facc15 !important;
+    color: black !important;
+}
+
+.status-completed {
+    background: #22c55e !important;
+    color: black !important;
+}
+
+.status-po_assist {
+    background: #a855f7 !important;
+    color: white !important;
+}
+
+.status-sent_to_qa {
+    background: #fb923c !important;
+    color: black !important;
+}
