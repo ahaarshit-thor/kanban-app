@@ -836,7 +836,47 @@ def add_task():
     cur.close()
     conn.close()
 
-    return redirect(url_for("home"))
+    return redirect(
+    url_for(
+        "my_tasks",
+        name=name,
+        date=date
+    )
+)
+# ---------- MY TASKS ----------
+@app.route("/my-tasks")
+def my_tasks():
+
+    name = request.args.get("name")
+    date = request.args.get("date")
+
+    conn = get_db()
+    cur = conn.cursor()
+
+    cur.execute(
+        """
+        SELECT * FROM tasks
+        WHERE name=%s AND date=%s
+        ORDER BY id
+        """,
+        (name, date)
+    )
+
+    rows = cur.fetchall()
+
+    columns = [desc[0] for desc in cur.description]
+
+    tasks = [dict(zip(columns, row)) for row in rows]
+
+    cur.close()
+    conn.close()
+
+    return render_template(
+        "my_tasks.html",
+        tasks=tasks,
+        name=name,
+        date=date
+    )
 
 
 # ---------- DASHBOARD ----------
@@ -885,7 +925,54 @@ def update_status(task_id):
     conn.close()
 
     return redirect("/dashboard")
+# ---------- EDIT TASK ----------
+@app.route("/edit-task/<int:task_id>", methods=["POST"])
+def edit_task(task_id):
 
+    details = request.form.get("details")
+    status = request.form.get("status")
+    tat = request.form.get("tat")
+    qa = request.form.get("qa")
+    others = request.form.get("others")
+
+    name = request.form.get("name")
+    date = request.form.get("date")
+
+    conn = get_db()
+    cur = conn.cursor()
+
+    cur.execute(
+        """
+        UPDATE tasks
+        SET details=%s,
+            status=%s,
+            tat=%s,
+            qa=%s,
+            others=%s
+        WHERE id=%s
+        """,
+        (
+            details,
+            status,
+            tat,
+            qa,
+            others,
+            task_id
+        )
+    )
+
+    conn.commit()
+
+    cur.close()
+    conn.close()
+
+    return redirect(
+        url_for(
+            "my_tasks",
+            name=name,
+            date=date
+        )
+    )
 
 # ---------- ANALYTICS ----------
 @app.route("/analytics")

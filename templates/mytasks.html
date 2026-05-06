@@ -1,70 +1,162 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>My Tasks</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+          rel="stylesheet">
+
 </head>
 
 <body>
 
-<h1>{{ name }}'s Tasks 📋</h1>
+    <h1>📝 My Tasks</h1>
 
-<div class="form-container">
+    <!-- USER INFO -->
+    <div class="user-info">
 
-    {% if tasks %}
+        👤 {{ name }}
+        &nbsp; | &nbsp;
+        📅 {{ date }}
 
-    <div class="table-wrapper">
-        <table>
-
-            <tr>
-                <th>Date</th>
-                <th>Work Type</th>
-                <th>Details</th>
-                <th>Status</th>
-                <th>TAT</th>
-                <th>QA</th>
-                <th>Others</th>
-                <th>Edit</th>
-            </tr>
-
-            {% for t in tasks %}
-            <tr>
-                <td>{{ t.date }}</td>
-                <td>{{ t.work_type }}</td>
-                <td>{{ t.details }}</td>
-
-                <td>
-                    {% if t.status == "not_started" %}
-                        🔵 Not Started
-                    {% elif t.status == "in_progress" %}
-                        🟡 In Progress
-                    {% else %}
-                        🟢 Completed
-                    {% endif %}
-                </td>
-
-                <td>{{ t.tat }}</td>
-                <td>{{ t.qa }}</td>
-                <td>{{ t.others }}</td>
-
-                <td>
-                    <a href="/edit/{{ t.id }}">
-                        <button>Edit</button>
-                    </a>
-                </td>
-            </tr>
-            {% endfor %}
-
-        </table>
     </div>
 
-    {% else %}
-        <p style="text-align:center;">No tasks found 😕</p>
-    {% endif %}
+    <!-- TASK GRID -->
+    <div class="task-grid">
 
-</div>
+        {% for t in tasks %}
+
+        <form method="POST"
+              action="/edit-task/{{ t.id }}">
+
+            <div class="task-entry-card">
+
+                <h3>{{ t.work_type }}</h3>
+
+                <!-- HIDDEN -->
+                <input type="hidden"
+                       name="name"
+                       value="{{ name }}">
+
+                <input type="hidden"
+                       name="date"
+                       value="{{ date }}">
+
+                <!-- DETAILS -->
+                <div class="form-group">
+
+                    <label>Details</label>
+
+                    <textarea name="details"
+                              class="compact-textarea">{{ t.details }}</textarea>
+
+                </div>
+
+                <!-- STATUS -->
+                <div class="form-group">
+
+                    <label>Status</label>
+
+                    <select name="status"
+                            class="dark-select">
+
+                        <option value="not_started"
+                        {% if t.status == "not_started" %}
+                        selected
+                        {% endif %}>
+                        Not Started
+                        </option>
+
+                        <option value="in_progress"
+                        {% if t.status == "in_progress" %}
+                        selected
+                        {% endif %}>
+                        In Progress
+                        </option>
+
+                        <option value="completed"
+                        {% if t.status == "completed" %}
+                        selected
+                        {% endif %}>
+                        Completed
+                        </option>
+
+                        <option value="po_assist"
+                        {% if t.status == "po_assist" %}
+                        selected
+                        {% endif %}>
+                        PO Assist
+                        </option>
+
+                        <option value="sent_to_qa"
+                        {% if t.status == "sent_to_qa" %}
+                        selected
+                        {% endif %}>
+                        Sent To QA
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- TAT -->
+                <div class="form-group">
+
+                    <label>TAT</label>
+
+                    <input type="text"
+                           name="tat"
+                           value="{{ t.tat }}">
+
+                </div>
+
+                <!-- QA -->
+                <div class="form-group">
+
+                    <label>QA</label>
+
+                    <input type="text"
+                           name="qa"
+                           value="{{ t.qa }}">
+
+                </div>
+
+                <!-- OTHERS -->
+                <div class="form-group">
+
+                    <label>Others</label>
+
+                    <input type="text"
+                           name="others"
+                           value="{{ t.others }}">
+
+                </div>
+
+                <!-- SAVE -->
+                <button type="submit">
+
+                    💾 Save Changes
+
+                </button>
+
+            </div>
+
+        </form>
+
+        {% endfor %}
+
+    </div>
 
 </body>
+
 </html>
