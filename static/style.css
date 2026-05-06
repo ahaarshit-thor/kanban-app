@@ -170,3 +170,79 @@ button:hover {
     background: cyan;
     border-radius: 10px;
 }
+/* ---------- ANALYTICS GRID ---------- */
+.analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+/* ---------- ANALYTICS CARD ---------- */
+.analytics-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 15px;
+    transition: 0.3s;
+    box-shadow: 0 0 10px rgba(0,255,255,0.08);
+}
+
+.analytics-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 14px rgba(0,255,255,0.18);
+}
+
+/* ---------- CARD TITLE ---------- */
+.analytics-card h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: cyan;
+    font-size: 18px;
+}
+
+/* ---------- TOTAL BOX ---------- */
+.total-box {
+    background: rgba(255,255,255,0.08);
+    padding: 8px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* ---------- STATUS LABEL ---------- */
+.status-label {
+    padding: 6px 10px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    display: block;
+}
+
+/* ---------- STATUS COLORS ---------- */
+.not_started {
+    background: #1e3a8a;
+    color: white;
+}
+
+.in_progress {
+    background: #facc15;
+    color: black;
+}
+
+.completed {
+    background: #22c55e;
+    color: black;
+}
+
+.po_assist {
+    background: #a855f7;
+    color: white;
+}
+
+.sent_to_qa {
+    background: #fb923c;
+    color: black;
+}

@@ -1,81 +1,96 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Analytics</title>
+    <title>Analytics Dashboard</title>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
-    <style>
-        .cards {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        .card {
-            background: rgba(255,255,255,0.08);
-            padding: 15px;
-            border-radius: 10px;
-            width: 200px;
-            text-align: center;
-        }
-
-        .big {
-            font-size: 20px;
-            margin-top: 5px;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-<h1>📊 Smart Analytics</h1>
+<h1>📊 Analytics Dashboard</h1>
 
-<!-- TOP INSIGHTS -->
-<div class="cards">
+{% for date, worktypes in analytics_data.items() %}
 
-    <div class="card">
-        <h3>👤 Most Busy</h3>
-        <div class="big">{{ top_user[0] }}</div>
-        <small>{{ top_user[1] }} tasks</small>
-    </div>
+<div class="accordion">
+    📅 {{ date }}
+</div>
 
-    <div class="card">
-        <h3>🔥 Busiest Day</h3>
-        <div class="big">{{ busiest_day }}</div>
-    </div>
+<div class="panel">
 
-    <div class="card">
-        <h3>⚠️ In Progress</h3>
-        <div class="big">{{ in_progress }}</div>
+    <div class="analytics-grid">
+
+        {% for work, stats in worktypes.items() %}
+
+        <div class="analytics-card">
+
+            <h3>{{ work }}</h3>
+
+            <div class="total-box">
+                Total Tasks: {{ stats.total }}
+            </div>
+
+            {% if stats.completed > 0 %}
+            <div class="status-label completed">
+                🟢 Completed: {{ stats.completed }}
+            </div>
+            {% endif %}
+
+            {% if stats.in_progress > 0 %}
+            <div class="status-label in_progress">
+                🟡 In Progress: {{ stats.in_progress }}
+            </div>
+            {% endif %}
+
+            {% if stats.po_assist > 0 %}
+            <div class="status-label po_assist">
+                🟣 PO Assist: {{ stats.po_assist }}
+            </div>
+            {% endif %}
+
+            {% if stats.sent_to_qa > 0 %}
+            <div class="status-label sent_to_qa">
+                🟠 Sent to QA: {{ stats.sent_to_qa }}
+            </div>
+            {% endif %}
+
+            {% if stats.not_started > 0 %}
+            <div class="status-label not_started">
+                🔵 Not Started: {{ stats.not_started }}
+            </div>
+            {% endif %}
+
+        </div>
+
+        {% endfor %}
+
     </div>
 
 </div>
 
-<!-- DAILY SNAPSHOT -->
-<h2 style="text-align:center;">📅 Daily Snapshot</h2>
+{% endfor %}
 
-<table>
-    <tr>
-        <th>Date</th>
-        <th>Total</th>
-        <th>Completed</th>
-        <th>In Progress</th>
-        <th>Not Started</th>
-    </tr>
+<script>
 
-    {% for date, d in data.items() %}
-    <tr>
-        <td>{{ date }}</td>
-        <td>{{ d.total }}</td>
-        <td style="color:lightgreen;">{{ d.completed }}</td>
-        <td style="color:orange;">{{ d.in_progress }}</td>
-        <td style="color:skyblue;">{{ d.not_started }}</td>
-    </tr>
-    {% endfor %}
+const accordions = document.querySelectorAll(".accordion");
 
-</table>
+accordions.forEach(acc => {
+
+    acc.addEventListener("click", () => {
+
+        const panel = acc.nextElementSibling;
+
+        panel.style.display =
+            panel.style.display === "block"
+            ? "none"
+            : "block";
+    });
+
+});
+
+</script>
 
 </body>
 </html>

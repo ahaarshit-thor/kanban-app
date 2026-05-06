@@ -869,10 +869,12 @@ def update_status(task_id):
 # ---------- ANALYTICS ----------
 @app.route("/analytics")
 def analytics():
+
     conn = get_db()
     cur = conn.cursor()
 
     cur.execute("SELECT * FROM tasks")
+
     rows = cur.fetchall()
     columns = [desc[0] for desc in cur.description]
 
@@ -881,57 +883,39 @@ def analytics():
     cur.close()
     conn.close()
 
-    grouped = {}
+    analytics_data = {}
 
     for t in tasks:
-        d = t["date"]
 
-        if d not in grouped:
-            grouped[d] = {
+        date = t["date"]
+        work_type = t["work_type"]
+        status = t["status"]
+
+        # DATE LEVEL
+        if date not in analytics_data:
+            analytics_data[date] = {}
+
+        # WORK TYPE LEVEL
+        if work_type not in analytics_data[date]:
+            analytics_data[date][work_type] = {
                 "total": 0,
-                "completed": 0,
-                "in_progress": 0,
                 "not_started": 0,
-                "blocked": 0,
-                "on_hold": 0,
+                "in_progress": 0,
+                "completed": 0,
                 "po_assist": 0,
                 "sent_to_qa": 0
             }
 
-        grouped[d]["total"] += 1
+        # TOTAL
+        analytics_data[date][work_type]["total"] += 1
 
-        if t["status"] == "completed":
-            grouped[d]["completed"] += 1
-        elif t["status"] == "in_progress":
-            grouped[d]["in_progress"] += 1
-        elif t["status"] == "po_assist":
-            grouped[d]["po_assist"] += 1
-        elif t["status"] == "sent_to_qa":
-            grouped[d]["sent_to_qa"] += 1
-        elif t["status"] == "blocked":
-            grouped[d]["blocked"] += 1
-        elif t["status"] == "on_hold":
-            grouped[d]["on_hold"] += 1
-        else:
-            grouped[d]["not_started"] += 1
-
-    from collections import Counter
-
-    user_load = Counter([t["name"] for t in tasks])
-    top_user = user_load.most_common(1)[0] if user_load else ("N/A", 0)
-
-    date_load = {d: data["total"] for d, data in grouped.items()}
-    busiest_day = max(date_load, key=date_load.get) if date_load else "N/A"
-
-    active_status = ["in_progress", "po_assist", "sent_to_qa"]
-    total_active = sum([t["status"] in active_status for t in tasks])
+        # STATUS COUNT
+        if status in analytics_data[date][work_type]:
+            analytics_data[date][work_type][status] += 1
 
     return render_template(
         "analytics.html",
-        data=grouped,
-        top_user=top_user,
-        busiest_day=busiest_day,
-        active_work=total_active
+        analytics_data=analytics_data
     )
 
 
